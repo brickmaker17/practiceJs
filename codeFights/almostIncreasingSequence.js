@@ -52,14 +52,59 @@
 //         console.log(arr);
 // }
 
-const almostIncreasingSequence = sequence => {
-    const arr = sequence.map(x => x);
-    let i = 1
-    while(i < sequence.length -1){
-        i++;
-    }
-    const compare = (sequence[0] < arr[i])? true : false;
-    console.log(compare)
-}
+// const almostIncreasingSequence = sequence => {
+//     const arr = sequence.map(x => x);
+//     let i = 1
+//     while(i < sequence.length -1){
+//         i++;
+//     }
+//     const compare = (sequence[0] < arr[i])? true : false;
+//     return compare
+// }
 
-almostIncreasingSequence([1, 3, 2, 1]);
+
+// const almostIncreasingSequence = sequence => {
+//     let extraLifeUsed = false;
+//     let i = 0;
+//     while (i < sequence.length) {
+//       if (sequence[i] >= sequence[i + 1]) {
+//         if (extraLifeUsed) {
+//           return false;
+//         }
+//         sequence.splice(i, 1);
+//         extraLifeUsed = true;
+//         i = 0;
+//         continue;
+//       }
+//       i++;
+//     }
+  
+//     return console.log(true);
+//   }
+
+const almostIncreasingSequence = sequence => {
+    let signal = false;
+    for (let i = 0; i < sequence.length - 1; i++){
+        if (sequence[i] >= sequence[i+1] && !signal){
+            if (sequence[i] >= sequence[i+2]){
+            signal = true;
+            sequence.splice(i, 1);
+            i = i - 1;
+            console.log(sequence);
+            } else {
+            signal = true;
+            sequence.splice(i+1, 1);
+            i = i - 1;
+            console.log(sequence);
+            }
+        } else if (signal){
+            for (let j = 0; j < sequence.length - 1; j++){
+                if (sequence[j] >= sequence[j+1]){
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+almostIncreasingSequence([1, 2, 3, 4, 3, 6]);
